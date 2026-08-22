@@ -1,0 +1,235 @@
+.dashboard {
+  padding: 1rem;
+}
+
+.dashboard h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.dashboard h3 {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Metrics cards */
+.dashboard__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.metric-card.metric-card--improving {
+  border-color: #4ade80;
+  background: rgba(74, 222, 128, 0.05);
+}
+
+.metric-card.metric-card--declining {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.05);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.metric-unit {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Dashboard sections */
+.dashboard__section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Simple bar chart */
+.simple-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 400px;
+}
+
+.bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 60px;
+}
+
+.bar-wrapper {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light, #60a5fa));
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.75rem;
+  min-width: 30px;
+  transition: width 0.3s ease;
+}
+
+.bar--month {
+  background: linear-gradient(90deg, #8b5cf6, #d946ef);
+}
+
+.bar-value {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+}
+
+.bar-subtext {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+}
+
+/* Score chart (simple dots) */
+.score-chart {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-height: 120px;
+  min-width: 400px;
+  padding: 1rem 0;
+}
+
+.score-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 30px;
+}
+
+.score-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: opacity 0.2s;
+}
+
+.score-label {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 50px;
+  word-break: break-word;
+}
+
+.score-value {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+/* Summary section */
+.dashboard__summary {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .dashboard__metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .simple-bar-chart {
+    min-width: 100%;
+  }
+
+  .score-chart {
+    min-width: 100%;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}

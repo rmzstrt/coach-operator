@@ -1,0 +1,38 @@
+:root {
+  --bg: #0f2138;
+  --bg-elevated: #16304f;
+  --card: #1a3654;
+  --border: #2a4a6e;
+  --text: #eef4fb;
+  --text-muted: #9db3c9;
+  --accent: #f4c542;
+  --accent-strong: #e0ab1f;
+  --danger: #c0392b;
+  --success: #3fa35e;
+  --radius: 14px;
+
+  color-scheme: dark;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font-family: inherit;
+}
