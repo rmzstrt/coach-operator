@@ -108,16 +108,12 @@ export function TargetFace({
   const cropX = drag ? Math.min(Math.max(drag.svgX, cropSize / 2), VIEW - cropSize / 2) - cropSize / 2 : 0;
   const cropY = drag ? Math.min(Math.max(drag.svgY, cropSize / 2), VIEW - cropSize / 2) - cropSize / 2 : 0;
 
-  // Ancrée dans le coin opposé au quadrant touché par le doigt : la loupe reste
-  // toujours entièrement visible et jamais masquée par le doigt/la main, quel que
-  // soit l'endroit du blason touché.
+  // Toujours ancrée en haut du blason (jamais en bas) pour rester prévisible ; elle
+  // suit seulement le doigt horizontalement, en restant dans les limites du blason.
+  const magTop = MAG_MARGIN;
   let magLeft = MAG_MARGIN;
-  let magTop = MAG_MARGIN;
   if (drag) {
-    const touchLeftHalf = drag.screenX < size / 2;
-    const touchTopHalf = drag.screenY < size / 2;
-    magLeft = touchLeftHalf ? size - MAG_SIZE - MAG_MARGIN : MAG_MARGIN;
-    magTop = touchTopHalf ? size - MAG_SIZE - MAG_MARGIN : MAG_MARGIN;
+    magLeft = Math.max(MAG_MARGIN, Math.min(size - MAG_SIZE - MAG_MARGIN, drag.screenX - MAG_SIZE / 2));
   }
 
   return (
