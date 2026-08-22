@@ -112,7 +112,15 @@ export function TargetFace({
   let magTop = drag ? drag.screenY - MAG_OFFSET_Y - MAG_SIZE / 2 : 0;
   if (drag) {
     magLeft = Math.max(-16, Math.min(size - MAG_SIZE + 16, magLeft));
-    if (magTop < -10) magTop = drag.screenY + 28; // pas de place au-dessus : loupe en dessous
+    // Logique smart : si pas assez de place au-dessus (< 20px), mettre en dessous
+    if (magTop < 20) {
+      magTop = drag.screenY + 32; // en dessous du doigt
+    }
+    // Et vérifier qu'elle ne sort pas en bas
+    const maxTop = size - MAG_SIZE + 16;
+    if (magTop > maxTop) {
+      magTop = Math.max(20, drag.screenY - MAG_OFFSET_Y - MAG_SIZE / 2);
+    }
   }
 
   return (

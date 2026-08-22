@@ -18,6 +18,7 @@
   flex-wrap: wrap;
   gap: 10px;
   padding-top: 8px;
+  width: 100%;
 }
 
 .view-header h1 {
@@ -923,6 +924,20 @@
 
 /* ===== OPTIMISATIONS MOBILE ===== */
 @media (pointer: coarse) {
+  /* Header mobile - faire le bouton nouvelle séance sur sa propre ligne */
+  .view-header {
+    align-items: stretch;
+  }
+
+  .view-header__actions {
+    flex-basis: 100%;
+    order: 3;
+  }
+
+  .view-header .btn-primary {
+    width: 100%;
+  }
+
   /* Augmenter les zones tactiles */
   .btn-icon {
     width: 48px;
