@@ -31,32 +31,74 @@
   flex-shrink: 0;
 }
 
-.view-header__actions {
+/* Barres de navigation de la page d'accueil : une fonction par ligne,
+   empilées verticalement, pour rester lisibles et faciles à toucher en portrait. */
+.nav-bar-list {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
-  flex-shrink: 0;
 }
 
-.icon-badge-count {
-  position: absolute;
-  top: -4px;
-  right: -4px;
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.08s ease, border-color 0.15s ease;
+}
+
+.nav-bar:active {
+  transform: scale(0.98);
+}
+
+.nav-bar--active {
+  border-color: var(--accent);
+  background: var(--bg-elevated);
+}
+
+.nav-bar__icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  width: 26px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.nav-bar__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-bar__count {
   background: var(--accent);
   color: #1a1400;
   border-radius: 999px;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  min-width: 16px;
-  height: 16px;
-  display: flex;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 3px;
+  padding: 0 6px;
+  flex-shrink: 0;
 }
 
-.view-header__actions .btn-icon {
-  position: relative;
+.nav-bar__chevron {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 .subtitle {
@@ -929,11 +971,6 @@
     align-items: stretch;
   }
 
-  .view-header__actions {
-    flex-basis: 100%;
-    order: 3;
-  }
-
   .view-header .btn-primary {
     width: 100%;
   }
@@ -956,9 +993,9 @@
     font-size: 1.05rem;
   }
 
-  /* Augmenter le gap entre les boutons pour les doigts */
-  .view-header__actions {
-    gap: 12px;
+  .nav-bar {
+    padding: 14px 16px;
+    font-size: 1.05rem;
   }
 
   .mode-toggle {

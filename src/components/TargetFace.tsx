@@ -18,7 +18,7 @@ const VIEW = 200;
 const CENTER = VIEW / 2;
 const R = 92;
 const MAG_SIZE = 148; // taille de la loupe à l'écran, en px
-const MAG_OFFSET_Y = 180; // décalage au-dessus du doigt, en px (augmenté pour mobile)
+const MAG_MARGIN = 10; // marge entre la loupe et le bord du blason, en px
 
 function markElements(marks: Arrow[]) {
   return marks
@@ -108,19 +108,16 @@ export function TargetFace({
   const cropX = drag ? Math.min(Math.max(drag.svgX, cropSize / 2), VIEW - cropSize / 2) - cropSize / 2 : 0;
   const cropY = drag ? Math.min(Math.max(drag.svgY, cropSize / 2), VIEW - cropSize / 2) - cropSize / 2 : 0;
 
-  let magLeft = drag ? drag.screenX - MAG_SIZE / 2 : 0;
-  let magTop = drag ? drag.screenY - MAG_OFFSET_Y - MAG_SIZE / 2 : 0;
+  // Ancrée dans le coin opposé au quadrant touché par le doigt : la loupe reste
+  // toujours entièrement visible et jamais masquée par le doigt/la main, quel que
+  // soit l'endroit du blason touché.
+  let magLeft = MAG_MARGIN;
+  let magTop = MAG_MARGIN;
   if (drag) {
-    magLeft = Math.max(-16, Math.min(size - MAG_SIZE + 16, magLeft));
-    // Logique smart : si pas assez de place au-dessus (< 20px), mettre en dessous
-    if (magTop < 20) {
-      magTop = drag.screenY + 32; // en dessous du doigt
-    }
-    // Et vérifier qu'elle ne sort pas en bas
-    const maxTop = size - MAG_SIZE + 16;
-    if (magTop > maxTop) {
-      magTop = Math.max(20, drag.screenY - MAG_OFFSET_Y - MAG_SIZE / 2);
-    }
+    const touchLeftHalf = drag.screenX < size / 2;
+    const touchTopHalf = drag.screenY < size / 2;
+    magLeft = touchLeftHalf ? size - MAG_SIZE - MAG_MARGIN : MAG_MARGIN;
+    magTop = touchTopHalf ? size - MAG_SIZE - MAG_MARGIN : MAG_MARGIN;
   }
 
   return (

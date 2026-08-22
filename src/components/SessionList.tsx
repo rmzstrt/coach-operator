@@ -40,38 +40,52 @@ export function SessionList({
     <div className="view">
       <header className="view-header">
         <h1>🏹 Mes séances</h1>
-        <div className="view-header__actions">
-          <button
-            className={`btn btn-icon ${showDashboard ? "btn--active" : ""}`}
-            onClick={() => setShowDashboard(!showDashboard)}
-            aria-label="Dashboard"
-          >
-            📊
-          </button>
-          <button className="btn btn-icon" onClick={onOpenPalmares} aria-label="Palmarès">
-            🏆
-            {badgeCount > 0 && <span className="icon-badge-count">{badgeCount}</span>}
-          </button>
-          <button className="btn btn-icon" onClick={onOpenGear} aria-label="Matériel">
-            🔧
-          </button>
-          <button className="btn btn-icon" onClick={onOpenGrouping} aria-label="Groupement">
-            🎯
-          </button>
-          <button className="btn btn-icon" onClick={onOpenGroupingAnalysis} aria-label="Analyse dérive">
-            📈
-          </button>
-          <button className="btn btn-icon" onClick={onOpenTuning} aria-label="Tuning">
-            🩺
-          </button>
-          <button className="btn btn-icon" onClick={onOpenChrono} aria-label="Chrono">
-            ⏱️
-          </button>
-          <button className="btn btn-primary" onClick={onNew}>
-            + Nouvelle séance
-          </button>
-        </div>
+        <button className="btn btn-primary" onClick={onNew}>
+          + Nouvelle séance
+        </button>
       </header>
+
+      <nav className="nav-bar-list">
+        <button
+          className={`nav-bar ${showDashboard ? "nav-bar--active" : ""}`}
+          onClick={() => setShowDashboard(!showDashboard)}
+        >
+          <span className="nav-bar__icon">📊</span>
+          <span className="nav-bar__label">Dashboard</span>
+          <span className="nav-bar__chevron">›</span>
+        </button>
+        <button className="nav-bar" onClick={onOpenPalmares}>
+          <span className="nav-bar__icon">🏆</span>
+          <span className="nav-bar__label">Palmarès</span>
+          {badgeCount > 0 && <span className="nav-bar__count">{badgeCount}</span>}
+          <span className="nav-bar__chevron">›</span>
+        </button>
+        <button className="nav-bar" onClick={onOpenGear}>
+          <span className="nav-bar__icon">🔧</span>
+          <span className="nav-bar__label">Matériel</span>
+          <span className="nav-bar__chevron">›</span>
+        </button>
+        <button className="nav-bar" onClick={onOpenGrouping}>
+          <span className="nav-bar__icon">🎯</span>
+          <span className="nav-bar__label">Groupement</span>
+          <span className="nav-bar__chevron">›</span>
+        </button>
+        <button className="nav-bar" onClick={onOpenGroupingAnalysis}>
+          <span className="nav-bar__icon">📈</span>
+          <span className="nav-bar__label">Analyse dérive</span>
+          <span className="nav-bar__chevron">›</span>
+        </button>
+        <button className="nav-bar" onClick={onOpenTuning}>
+          <span className="nav-bar__icon">🩺</span>
+          <span className="nav-bar__label">Tuning</span>
+          <span className="nav-bar__chevron">›</span>
+        </button>
+        <button className="nav-bar" onClick={onOpenChrono}>
+          <span className="nav-bar__icon">⏱️</span>
+          <span className="nav-bar__label">Chrono</span>
+          <span className="nav-bar__chevron">›</span>
+        </button>
+      </nav>
 
       {trend.length >= 2 && (
         <div className="card trend-card">
