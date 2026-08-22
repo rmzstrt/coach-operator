@@ -18,7 +18,7 @@ const VIEW = 200;
 const CENTER = VIEW / 2;
 const R = 92;
 const MAG_SIZE = 148; // taille de la loupe à l'écran, en px
-const MAG_OFFSET_Y = 96; // décalage au-dessus du doigt, en px
+const MAG_OFFSET_Y = 180; // décalage au-dessus du doigt, en px (augmenté pour mobile)
 
 function markElements(marks: Arrow[]) {
   return marks

@@ -920,3 +920,114 @@
 .end-row--free .end-row__index {
   font-style: italic;
 }
+
+/* ===== OPTIMISATIONS MOBILE ===== */
+@media (pointer: coarse) {
+  /* Augmenter les zones tactiles */
+  .btn-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .btn {
+    padding: 14px 18px;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+
+  .btn-primary {
+    font-size: 1.05rem;
+  }
+
+  /* Augmenter le gap entre les boutons pour les doigts */
+  .view-header__actions {
+    gap: 12px;
+  }
+
+  .mode-toggle {
+    gap: 8px;
+    padding: 6px;
+  }
+
+  .mode-toggle__btn {
+    padding: 10px 0;
+    font-size: 0.9rem;
+  }
+
+  /* Augmenter les slots de flèches */
+  .arrow-slot {
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
+  }
+
+  /* Augmenter les boutons de score */
+  .value-btn {
+    padding: 20px 0;
+    font-size: 1.2rem;
+    border-radius: 14px;
+  }
+
+  .value-grid {
+    gap: 10px;
+  }
+
+  /* Augmenter les cartes */
+  .card {
+    padding: 16px 18px;
+  }
+
+  /* Augmenter les inputs/selects */
+  .field input,
+  .field select {
+    padding: 12px 14px;
+    font-size: 1.05rem;
+  }
+
+  /* Augmenter l'espacement global */
+  .view {
+    gap: 18px;
+  }
+
+  /* Texte plus gros */
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .score-summary__value {
+    font-size: 1.5rem;
+  }
+
+  /* Session list items plus grands */
+  .session-item {
+    padding: 14px 16px;
+    min-height: 56px;
+  }
+
+  /* Fins history - espacement */
+  .ends-history ul {
+    gap: 8px;
+  }
+
+  .end-row {
+    padding: 10px 14px;
+    min-height: 48px;
+  }
+
+  /* Arrow chips plus grands */
+  .arrow-chip {
+    padding: 4px 10px;
+    font-size: 0.9rem;
+  }
+
+  /* Blason - taille optimale pour mobile */
+  .target-wrap {
+    gap: 12px;
+  }
+}
