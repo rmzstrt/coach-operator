@@ -42,12 +42,15 @@ function opposite(dir: HorizontalTear): HorizontalTear {
 
 /**
  * Paper tuning : on tire à travers une feuille de papier tendue à ~2 m devant la cible et
- * on observe la forme du trou. Correction horizontale contre-intuitive sur un arc à
- * poulie : la flèche suit la trajectoire de la corde, pas le sens du rest — le rest se
- * corrige donc dans le sens OPPOSÉ à la déchirure. Source : Lancaster Archery Supply,
- * "Paper Tuning 101" (lancasterarchery.com/blogs/guides-and-information/paper-tuning-101) —
- * ex. nock-left tear : "Move the rest right to solve the problem", explicitement présenté
- * comme contre-intuitif par rapport au réflexe "même sens que la déchirure".
+ * on observe la forme du trou. Le rest (et les cames) se corrigent dans le MÊME sens que la
+ * déchirure pour un droitier (inversé pour un gaucher) :
+ * - Nock haut → point d'encochage plus bas, ou rest plus haut.
+ * - Nock bas → point d'encochage plus haut, ou rest plus bas.
+ * - Nock droite (droitier) → rest à l'opposé du riser, cames vers la droite ; peut aussi
+ *   indiquer un spine trop raide (stiff) — spine plus souple ou pointe plus lourde.
+ * - Nock gauche (droitier) → rest vers le riser, cames vers la gauche ; peut aussi indiquer
+ *   un spine trop mou (weak) — spine plus raide ou pointe plus légère.
+ * Pour un gaucher, ces sens (rest/cames) s'inversent.
  */
 export function diagnosePaperTuning(input: {
   vertical: VerticalTear;
@@ -71,21 +74,30 @@ export function diagnosePaperTuning(input: {
 
   if (vertical === "haut") {
     recommendations.push(
-      "Point d'encochage : redescends-le légèrement (le nock part trop haut sur le papier).",
+      "Point d'encochage : redescends-le légèrement, ou remonte le rest (le nock part trop haut sur le papier).",
     );
     highlightKeys.push("nockPoint");
   } else if (vertical === "bas") {
     recommendations.push(
-      "Point d'encochage : remonte-le légèrement (le nock part trop bas sur le papier).",
+      "Point d'encochage : remonte-le légèrement, ou descends le rest (le nock part trop bas sur le papier).",
     );
     highlightKeys.push("nockPoint");
   }
 
   if (horizontal !== "aucun") {
-    const dir = mirror(opposite(horizontal), handedness);
+    // Le rest et les cames se décalent dans le même sens que la déchirure pour un droitier,
+    // dans le sens inverse pour un gaucher.
+    const dir = mirror(horizontal, handedness);
+    const towardOrAway =
+      (handedness === "droitier") === (horizontal === "droite") ? "à l'opposé du riser" : "vers le riser";
+    const spineNote =
+      horizontal === "droite"
+        ? "Cette déchirure peut aussi indiquer un spine trop raide (stiff) : passe à un spine plus souple, ou augmente le poids de pointe pour l'assouplir."
+        : "Cette déchirure peut aussi indiquer un spine trop mou (weak) : passe à un spine plus raide, ou réduis le poids de pointe.";
     recommendations.push(
-      `Centershot (position du rest) : décale-le légèrement vers la ${dir} — contre-intuitif mais bien documenté : sur un arc à poulie, la flèche suit la trajectoire de la corde, pas le sens du rest, donc le rest se corrige dans le sens OPPOSÉ à la déchirure (nock vers la ${horizontal}).`,
+      `Centershot (position du rest) : décale-le légèrement vers la ${dir} (${towardOrAway}). Tu peux aussi décaler les cames vers la ${dir}.`,
     );
+    recommendations.push(spineNote);
     highlightKeys.push("centershot");
   }
 
@@ -106,11 +118,11 @@ export function diagnosePaperTuning(input: {
 
 /**
  * Bareshaft tuning : on compare le point d'impact d'une flèche sans empennage à celui du
- * groupe de flèches empennées. Contrairement au paper tuning, la correction du rest se
- * fait dans le MÊME sens que l'écart observé, pas opposé. Source : diagramme Lancaster
- * "Bareshaft Compound Tuning" — ex. bare shaft hits left → move rest to the left. L'écart
- * horizontal évoque avant tout une réaction de spine (raide/molle) — le rest est la piste
- * la plus simple à essayer en premier, avant de changer de pointe/flèche.
+ * groupe de flèches empennées. La correction du rest se fait dans le MÊME sens que l'écart
+ * observé pour un droitier (inversé pour un gaucher) — comme pour le paper tuning. Source :
+ * diagramme Lancaster "Bareshaft Compound Tuning" — ex. bare shaft hits left → move rest to
+ * the left. L'écart horizontal évoque avant tout une réaction de spine (raide/molle) — le
+ * rest est la piste la plus simple à essayer en premier, avant de changer de pointe/flèche.
  */
 export function diagnoseBareshaft(input: {
   vertical: VerticalTear; // écart du bare shaft par rapport au groupe empenné
@@ -149,7 +161,7 @@ export function diagnoseBareshaft(input: {
     const restDir = mirror(horizontal, handedness);
     recommendations.push(
       `Le bare shaft touche à ${horizontal} du groupe empenné : ça évoque une réaction dynamique ${spineNote}. ` +
-        `Piste la plus simple à tester d'abord : décale légèrement le rest vers la ${restDir} (même sens que l'écart, contrairement au paper tuning). ` +
+        `Piste la plus simple à tester d'abord : décale légèrement le rest vers la ${restDir} (même sens que l'écart). ` +
         "Si ça ne suffit pas après 2-3 essais, le sujet est plus probablement le spine ou le poids de pointe de la flèche — vois avec un pro shop avant d'en changer.",
     );
     highlightKeys.push("centershot");
@@ -173,8 +185,12 @@ export function diagnoseBareshaft(input: {
 /**
  * Walk-back tuning : on tire sur une ligne verticale (fil à plomb) à des distances
  * croissantes. Si les impacts dérivent latéralement en reculant, le centershot n'est pas
- * aligné — même phénomène physique que la déchirure horizontale en paper tuning (la
- * flèche suit la corde, pas le rest), donc même correction OPPOSÉE à la dérive observée.
+ * aligné.
+ *
+ * ATTENTION — ce diagnostic corrige dans le sens OPPOSÉ à la dérive observée, contrairement
+ * au paper et au bareshaft tuning (ci-dessus) qui corrigent dans le MÊME sens. Cette
+ * incohérence n'a pas été revérifiée après la correction du paper tuning ; à confirmer
+ * auprès d'une source fiable avant de faire confiance à cette recommandation telle quelle.
  */
 export function diagnoseWalkback(input: {
   drift: HorizontalTear;
@@ -197,7 +213,7 @@ export function diagnoseWalkback(input: {
     message: `Walk-back tuning (${amplitude}) : dérive vers la ${drift}`,
     summary: `Dérive vers la ${drift} en reculant`,
     recommendations: [
-      `Centershot (position du rest) : décale-le légèrement vers la ${dir} — même logique contre-intuitive que le paper tuning (voir plus haut) : le rest se corrige dans le sens opposé à la dérive observée.`,
+      `Centershot (position du rest) : décale-le légèrement vers la ${dir} (sens opposé à la dérive observée) — ⚠️ règle non revérifiée, voir la note en tête de fonction.`,
       DISCLAIMER,
     ],
     highlightKeys: ["centershot"],
